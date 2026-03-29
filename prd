@@ -1,0 +1,289 @@
+# Millonarios Fan App PRD
+## Template-Based Sports App (iOS)
+
+---
+
+## 1. Product Overview
+
+The Millonarios Fan App is a content-first mobile application that aggregates all relevant information about a football club into a single platform.
+
+It combines:
+- News and media aggregation
+- Live match data and standings
+- Community discussion (forum + karma)
+- Future ticket marketplace
+
+The system is designed as a reusable template that can be easily adapted to any football team.
+
+---
+
+## 2. Product Goals
+
+### Primary Goal
+Create the best single place to follow a football team.
+
+### Secondary Goals
+- Build a daily habit loop through feed and notifications
+- Enable community trust via karma system
+- Prepare infrastructure for marketplace monetization
+
+---
+
+## 3. User Personas
+
+### Casual Fan
+- Wants quick updates
+- Checks scores and headlines
+
+### Engaged Fan
+- Consumes content regularly
+- Participates in discussions
+
+### Super Fan (Future Seller)
+- Active contributor
+- Builds karma over time
+- Interested in buying/selling tickets
+
+---
+
+## 4. Core Features
+
+### 4.1 Aggregated Feed (Core Feature)
+
+#### Description
+A chronological feed aggregating:
+- YouTube videos (selected channels)
+- News articles (manual sources via RSS)
+- Social media posts (public APIs)
+- Optional match events
+
+#### Behavior
+- Strict chronological order (latest first)
+- No ranking algorithm in v1
+
+#### Filters
+- All
+- News
+- Videos
+- Social
+- Matches
+
+#### Search
+- Keyword-based search across feed items
+
+#### Data Model
+
+FeedItem {
+  id
+  team_id
+  type (news | video | social | match_event)
+  title
+  description
+  source_name
+  source_url
+  thumbnail
+  published_at
+  metadata (json)
+}
+
+---
+
+### 4.2 Matches, Fixtures, Standings
+
+#### Features
+- Upcoming matches
+- Live scores
+- Match stats
+- League standings
+
+#### Data Source
+- SofaScore API (paid)
+
+#### Screens
+- Fixtures list
+- Match detail (live)
+- Standings table
+
+---
+
+### 4.3 Community Forum + Karma
+
+#### Features
+- Create posts
+- Comment threads
+- Upvote system
+
+#### Karma System
+- +1 karma per upvote received
+
+#### Future Enhancements
+- Anti-spam weighting
+- Reputation tiers
+
+---
+
+### 4.4 Marketplace (Phase 2)
+
+#### Unlock Requirements
+- Account age ≥ 1 year
+- Karma ≥ defined threshold
+
+#### v1
+- Listing posts only (no transactions)
+
+#### Future
+- Escrow payments
+- Identity verification
+- Platform fee
+
+---
+
+### 4.5 Notifications
+
+#### Configurable Alerts
+- Match start
+- Goals (live)
+- Breaking news
+- Forum replies
+- Marketplace activity
+
+---
+
+## 5. System Architecture
+
+### 5.1 Multi-App Strategy
+
+Each team will have a separate app instance.
+
+Shared components:
+- Backend
+- Codebase
+- Infrastructure
+
+---
+
+### 5.2 Team Configuration Layer
+
+TeamConfig {
+  team_id
+  name
+  colors
+  logo
+  leagues
+  youtube_channels[]
+  news_sources[]
+  social_accounts[]
+}
+
+This enables fast replication for new teams.
+
+---
+
+### 5.3 Feed Ingestion System
+
+#### Pipeline
+1. Fetch sources
+2. Normalize content
+3. Deduplicate
+4. Store as FeedItems
+
+#### Sources
+- YouTube API
+- RSS feeds (news)
+- Social media APIs
+
+#### Frequency
+- Every 5–10 minutes
+
+---
+
+## 6. Tech Stack Recommendation
+
+### Frontend
+- React Native (Expo)
+
+### Backend
+- Supabase (database, auth, storage)
+
+### APIs
+- SofaScore (matches)
+- YouTube API
+- Social APIs (X, Instagram if available)
+- RSS feeds
+
+---
+
+## 7. Design Direction
+
+- Dark mode first
+- Strong team identity (colors, branding)
+- Card-based feed layout
+- Large typography
+- Smooth animations
+- Minimal reliance on generic UI patterns
+
+Goal: feel like an official club product, not a generic sports app.
+
+---
+
+## 8. Monetization
+
+### Phase 1
+- Subscription:
+  - No ads
+  - Premium features
+  - Enhanced notifications
+
+### Phase 2
+- Marketplace transaction fee (5%–15%)
+
+---
+
+## 9. MVP Scope
+
+### Must Have
+- Feed aggregation
+- Matches and standings
+- Basic forum
+
+### Not in MVP
+- Marketplace transactions
+- Advanced moderation
+- Complex ranking algorithms
+
+---
+
+## 10. Risks
+
+- Feed aggregation complexity
+- Social API limitations
+- Marketplace trust and fraud prevention (future)
+
+---
+
+## 11. Roadmap
+
+### Phase 1 (4–6 weeks)
+- Feed system
+- Matches integration
+- Core UI
+
+### Phase 2
+- Forum + karma system
+
+### Phase 3
+- Marketplace features
+
+---
+
+## 12. Key Insight
+
+The core value of the product is not the UI.
+
+It is:
+- The aggregation engine
+- The community layer
+
+If those are strong, the product becomes defensible and scalable.
+
+---
